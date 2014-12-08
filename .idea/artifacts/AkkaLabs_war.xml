@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="AkkaLabs:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="AkkaLabs-1.0.war">
+      <element id="artifact" artifact-name="AkkaLabs:war exploded" />
+    </root>
+  </artifact>
+</component>
