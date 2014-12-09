@@ -13,6 +13,8 @@ public class SessionActor extends UntypedActor {
     private SessionProcessor sessionProcessor;
     private Session session;
 
+    private WebSocketSessionListener webSocketSessionListener = new WebSocketSessionListener();
+
     public SessionActor(String sessionId, Session session, SessionProcessor sessionProcessor) {
         this.sessionId = sessionId;
         this.sessionProcessor =sessionProcessor;
@@ -22,13 +24,14 @@ public class SessionActor extends UntypedActor {
     @Override
     public void preStart() throws Exception {
         super.preStart();
-        session.addMessageHandler(new WebSocketSessionListener());//???
+        session.addMessageHandler(webSocketSessionListener);//???
         sessionProcessor.started(sessionId, getContext(), session);
     }
 
     @Override
     public void postStop() throws Exception {
         super.postStop();
+        session.removeMessageHandler(webSocketSessionListener);
         sessionProcessor.stopped();
     }
 
@@ -41,8 +44,7 @@ public class SessionActor extends UntypedActor {
             //getContext().getChild()
             sessionProcessor.outgoing(((Outgoing)message).getMessage());
         } else {
-            //??
-            //sessionProcessor.started(sessionId, getContext(), session);
+            sessionProcessor.outgoing(message);
         }
     }
 
