@@ -26,7 +26,6 @@ public class Init implements ServletContextListener {
 
         ActorRef tweetLinksActor = system.actorOf(Props.create(TweetLinksActor.class, wikiActor));
         TwitterClient c = TwitterClients.start(system, tweetLinksActor, "wikipedia");
-
     }
 
     @Override
